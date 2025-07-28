@@ -2,7 +2,7 @@
 
 ## What is this?
 
-TRM is a basic CPU with reduced features. This is the implementation of a 16-bit instruction set architecture based on RISC principles with a focus on teaching computer architecture. It consists of a simple toolchain composed by an assembler and simulator / debugger (virtual CPU). There are example programs available and a complete user manual (in Portuguese). The following instructions are implemented:
+TRM is a basic CPU with reduced features. This is the implementation of a 16-bit instruction set architecture based on RISC principles with focus on teaching computer architecture. It consists of a simple toolchain composed by an assembler and simulator / debugger (virtual CPU). There are example programs available and a complete user manual (in Portuguese). The following instructions are implemented:
 
 * Logic / Arithmetic (and, or, xor, add, sub)
 * Comparison (tlt, tge, tbl, tae, teq, tne)
@@ -37,7 +37,7 @@ The architecture has 16 general purpose registers. Register usage conventions ar
 
 ## Instruction format:
 
-Instructions can be two or four bytes long. According to the addressing mode, instructions can have only register arguments or a combination of registers and a literal value. The following format is used by all instructions. Instructions that have a literal value encoded in the instruction stream, following the first instruction word. 'op1' and 'op2' fields are opcode values, the 'I' field tells if the next word encodes a 16 bit immediate value (literal), 'ra' encodes the A register and 'rb' the B register.
+Instructions can be two or four bytes long. According to the addressing mode, instructions can have only register arguments or a combination of registers and an immediate (literal) value. The following format is used by all instructions. 'op1' and 'op2' fields are opcode values, the 'I' field tells if the next word encodes a 16 bit immediate value (literal), 'ra' encodes the A register and 'rb' the B register.
 
 ```
 op1 op2 I ra   rb  
@@ -87,7 +87,7 @@ The instruction set is very compact, being only 25 instructions (excluding 'hlt'
 
 ## Toolchain
 
-There are two versions of the toolchain, being one in the Python programming language and the other in Java. The Python version consists of two programs: an assembler (assemble.py) and a simulator (simulator.py) and both programs read and write to stdin and from stdout. The Java version is more complete, as is composed by an assembler and a simulator with a debugger. To run an example, just launch the programs:
+There are two versions of the toolchain, being one in the Python programming language and the other in Java. The Python version consists of two programs: an assembler (assemble.py) and a simulator (simulator.py) and both programs read and write to stdin and from stdout. The Java version is more complete, as is composed by an assembler and a simulator with a debugger. This version can be used in the command line or with a graphics interface. The GUI version includes a simple text editor, the assembler and simulator integrated, along with extended debugging features. To run an example, just launch the programs:
 
 ```
 $ python3 python/assemble.py example/01.add.s > 01-add.txt
@@ -97,7 +97,13 @@ $ python3 python/simulator.py 01-add.txt
 Or use the full featured Java simulator (use the flags 'r' or 'd' for a complete run or debugging):
 
 ```
-$ java -jar java/Run.jar r example/01-add.s
+$ java -jar java/Trm.jar r example/01-add.s
+```
+
+The GUI version can be launched with: 
+
+```
+$ java -jar java/TrmGUI.jar
 ```
 
 ## Simulator services
