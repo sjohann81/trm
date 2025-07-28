@@ -6,8 +6,16 @@ public class Simulator {
 	private static int[] context;
 	private static int context_pc = 0;
 	private static int[] memory;
+	private static int lsaddr = -1;
 	private static int limit_sp = 0;
 	private static final int MEMORY_SIZE_WORDS = 30720; //28672;
+	private static UserOutput out;
+	private static UserInput in;
+
+	Simulator(UserInput in, UserOutput out) {
+		this.in = in;
+		this.out = out;
+	}
 
 	public static boolean check(List<String> program) {
 		for (String lin : program) {
@@ -21,6 +29,7 @@ public class Simulator {
 	public static int load(List<String> program) {
 		context = new int[16];
 		memory = new int[MEMORY_SIZE_WORDS];
+		
 		int lines = 0;
 		try {
 			for (String lin : program) {
@@ -31,17 +40,23 @@ public class Simulator {
 					lines++;
 				}
 			}
-			System.out.printf("[program (code + data): %d bytes]\n", lines * 2);
+			out.putString(String.format("[program (code + data): %d bytes]\n", lines * 2));
+			
+			if (lines == 0) {
+				out.putString(String.format("[no object code - simulator failed]\n"));
+				
+				return -1;
+			}
 			
 			context_pc = 0;
 			limit_sp = (lines * 2) + 2;
 			context[14] = MEMORY_SIZE_WORDS * 2;
 			
-			System.out.printf("[memory size: %d]\n", MEMORY_SIZE_WORDS * 2);
+			out.putString(String.format("[memory size: %d]\n", MEMORY_SIZE_WORDS * 2));
 			
 			return 0;
 		} catch (Exception e) {
-			System.out.println("[error loading object code - simulator failed]");
+			out.putString(String.format("[error loading object code - simulator failed]\n"));
 			
 			return -1;
 		}
@@ -52,6 +67,10 @@ public class Simulator {
 	}
 	public static int[] getmemory() {
 		return memory;
+	}
+	
+	public static int getlastlsaddr() {
+		return lsaddr;
 	}
 	
 	public static int getpc() {
@@ -67,26 +86,26 @@ public class Simulator {
 	}
 	
 	private static int io(int address, int val) {
-		String input = "";
-		Scanner scan = new Scanner(System.in);
+//		String input = "";
+//		Scanner scan = new Scanner(System.in);
 		char data1, data2;
 		int retval = 0;
 		
 		switch (address) {
 			case 0xf000:	// write int (with line feed)
-				System.out.printf("%d\n", val); break;
+				out.putString(String.format("%d\n", val)); break;
 			case 0xf002:	// write int
-				System.out.printf("%d", val); break;
+				out.putString(String.format("%d", val)); break;
 			case 0xf004:	// write char (with line feed)
-				System.out.printf("%c\n", (char)(val & 0xff)); break;
+				out.putString(String.format("%c\n", (char)(val & 0xff))); break;
 			case 0xf006:	// write char
-				System.out.printf("%c", (char)(val & 0xff)); break;
+				out.putString(String.format("%c", (char)(val & 0xff))); break;
 			case 0xf008:	// write string (with line feed)
 				val >>= 1;
 				while (true) {
 					data1 = (char)(memory[val] >> 8);
 					data2 = (char)(memory[val] & 0xff);
-					System.out.printf("%c%c", data1, data2); 
+					out.putString(String.format("%c%c", data1, data2)); 
 					if (data1 == 0 || data2 == 0) break;
 					val++;
 				}
@@ -97,54 +116,42 @@ public class Simulator {
 				while (true) {
 					data1 = (char)(memory[val] >> 8);
 					data2 = (char)(memory[val] & 0xff);
-					System.out.printf("%c%c", data1, data2); 
+					out.putString(String.format("%c%c", data1, data2)); 
 					if (data1 == 0 || data2 == 0) break;
 					val++;
 				}
 				break;
 			case 0xf00c:	// write hex (with linefeed)
-				System.out.printf("%04x\n", val & 0xffff); break;
+				out.putString(String.format("%04x\n", val & 0xffff)); break;
 			case 0xf00e:	// write hex
-				System.out.printf("%04x", val & 0xffff); break;
+				out.putString(String.format("%04x", val & 0xffff)); break;
 			case 0xf010:	// read int
-				System.out.printf("(int)? ");
-				input = scan.nextLine();
-				retval = Integer.decode(input);
+				out.putString(String.format("[(int)?] "));
+				retval = in.getInt();
 				break;
 			case 0xf014:	// read char
-				System.out.printf("(char)? ");
-				input = scan.nextLine();
-				retval = Integer.parseInt(String.valueOf(input.charAt(0)));
+				out.putString(String.format("[(char)?] "));
+				retval = in.getChar();
 				break;
 			case 0xf018:	// read string
-				System.out.printf("(string)? ");
-				val >>= 1;
-				input = scan.nextLine() + "\0\0";
-				int i = 0;
-				while (true) {
-					data1 = (char)(input.charAt(i));
-					data2 = (char)(input.charAt(i + 1));
-					memory[val] = (data1 << 8) | data2;
-					if (data1 == 0 || data2 == 0) break;
-					val++;
-					i += 2;
-				}
+				out.putString(String.format("[(string)?] "));
+				in.getString(memory, val);
 				break;
 			case 0xf01c:	// read hex
-				System.out.printf("(hex)? ");
-				input = scan.nextLine();
-				retval = Integer.parseInt(input, 16);
+				out.putString(String.format("[(hex)?] "));
+				retval = in.getHex();
 				break;
 			default:
-				System.out.printf("[error - invalid IO port (%04x)]\n", address);
+				out.putString(String.format("[error - invalid IO port (%04x)]\n", address));
 		}
 		
 		return retval;
 	}
 
-	private static boolean cycle() { //List<String> output
+	private static boolean cycle() {
 		int pc = context_pc;
 		context[0] = 0x0000;
+		lsaddr = -1;
 
 		// fetch an instruction from memory
 		int instruction = memory[pc >> 1];
@@ -186,7 +193,7 @@ public class Simulator {
 				else if (op2 == 3) context[ra] = src1 ^ src2;
 				else if (op2 == 4) context[ra] = src1 + src2;
 				else if (op2 == 5) context[ra] = src1 - src2;
-				else { System.out.println("[error - invalid logic or arithmetic instruction]"); return false; }
+				else { out.putString(String.format("[error - invalid logic or arithmetic instruction]\n")); return false; }
 				break;
 			case 5:
 				if (op2 == 0) context[ra] = src1 < src2 ? 1 : 0;
@@ -195,16 +202,17 @@ public class Simulator {
 				else if (op2 == 5) context[ra] = src1u >= src2u ? 1 : 0;
 				else if (op2 == 8) context[ra] = src1 == src2 ? 1 : 0;
 				else if (op2 == 9) context[ra] = src1 == src2 ? 1 : 0;
-				else { System.out.println("[error - invalid comparison instruction]"); return false; }
+				else { out.putString(String.format("[error - invalid comparison instruction]\n")); return false; }
 				break;
 			case 1:
 				if (op2 == 8) context[ra] = src1 << (src2 & 0xf);
 				else if (op2 == 10) context[ra] = src1u >>> (src2 & 0xf);
 				else if (op2 == 11) context[ra] = src1 >> (src2 & 0xf);
-				else { System.out.println("[error - invalid shift instruction]"); return false; }
+				else { out.putString(String.format("[error - invalid shift instruction]\n")); return false; }
 				break;
 			case 2:
 				int addr = (imm == 0) ? src2u : (src1u + src2u);
+				lsaddr = addr;
 				switch(op2) {
 					case 0:
 						if (addr >= 0xf000) context[ra] = io(addr, srctgt & 0xffff);
@@ -221,14 +229,17 @@ public class Simulator {
 						}
 						break;
 					case 4:
+						lsaddr |= 0x10000;
 						if (addr >= 0xf000) io(addr, srctgt);
 						else memory[addr >> 1] = srctgt & 0xffff;
 						break;
 					case 6:
+						lsaddr |= 0x10000;
 						if ((addr & 1) != 0) memory[addr >> 1] = (memory[addr >> 1] & 0xff00) | (srctgt & 0xff);
 						else memory[addr >> 1] = (memory[addr >> 1] & 0x00ff) | ((srctgt & 0xff) << 8);
 						break;
-					default: System.out.println("[error - invalid data transfer instruction]"); return false;
+					default: out.putString(String.format("[error - invalid data transfer instruction]\n"));
+					 return false;
 				}
 				break;
 			case 4:
@@ -255,10 +266,10 @@ public class Simulator {
 				}
 				break;
 			case 7:
-				System.out.println("[halt]");
+				out.putString(String.format("[halt]\n"));
 				return false;
 			default:
-				System.out.println("[error - invalid instruction]");
+				out.putString(String.format("[error - invalid instruction]\n"));
 				return false;
 		}
 
@@ -275,17 +286,18 @@ public class Simulator {
 
 	public static void run() {
 		long cycles = 0;
+		
 		while (true) {
 			if (!cycle())
 				break;
 				
 			cycles++;
 			if (context[14] < limit_sp) {
-				System.out.println("[error - stack overflow detected]");
+				out.putString(String.format("[error - stack overflow detected]\n"));
 				break;
 			}
 		}
-		System.out.printf("%d cycles\n", cycles + 1);
+		out.putString(String.format("%d cycles\n", cycles + 1));
 	}
 	
 	public static boolean step() {
@@ -294,7 +306,7 @@ public class Simulator {
 		val = cycle();
 				
 		if (context[14] < limit_sp) {
-			System.out.println("[error - stack overflow detected]");
+			out.putString(String.format("[error - stack overflow detected]\n"));
 			return false;
 		}
 		

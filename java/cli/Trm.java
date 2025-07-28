@@ -1,6 +1,51 @@
 import java.io.*;
 import java.util.*;
 
+class OutputDev extends UserOutput {
+	public void putInt(int val) {}
+	public void putHex(int val) {}
+	public void putChar(char val) {}
+	public void putString(String val) {
+		System.out.print(val);
+	}
+}
+
+class InputDev extends UserInput {
+	private String input = "";
+	private Scanner scan = new Scanner(System.in);
+	private char data1, data2;
+	private int retval;
+	
+	public int getInt() {
+		input = scan.nextLine();
+		retval = Integer.decode(input);
+		return retval;
+	}
+	public int getHex() {
+		input = scan.nextLine();
+		retval = Integer.parseInt(input, 16);
+		return retval;
+	}
+	public char getChar() {
+		input = scan.nextLine();
+		retval = Integer.parseInt(String.valueOf(input.charAt(0)));
+		return (char)(retval & 0xff);
+	}
+	public void getString(int[] memory, int addr) {
+		addr >>= 1;
+		input = scan.nextLine() + "\0\0";
+		int i = 0;
+		while (true) {
+			data1 = (char)(input.charAt(i));
+			data2 = (char)(input.charAt(i + 1));
+			memory[addr] = (data1 << 8) | data2;
+			if (data1 == 0 || data2 == 0) break;
+			addr++;
+			i += 2;
+		}
+	}
+}
+
 public class Trm {
 	private static void printexec(Assembler asm, Simulator sim, int inst, int[] context) {
 		if ((inst & 0x0100) != 0) {
@@ -118,6 +163,7 @@ public class Trm {
 			}
 			
 			go = sim.step();
+			
 			if (go) {
 				cycles++;
 			} else {
@@ -130,8 +176,10 @@ public class Trm {
 	public static void main(String[] args) throws IOException {
 		List<String> program = new ArrayList<>();
 		List<String> obj_code = new ArrayList<>();
+		UserOutput out = new OutputDev();
+		UserInput in = new InputDev();
 		Assembler asm = new Assembler();
-		Simulator sim = new Simulator();
+		Simulator sim = new Simulator(in, out);
 		BufferedReader reader;
 		BufferedWriter writer;
 		String line;

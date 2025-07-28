@@ -5,8 +5,8 @@ public class Assembler {
 
 	private static final Map<String, Integer> codes = new HashMap<>();
 	private static final Map<Integer, String> codes_inv = new HashMap<>();
-	private static final Map<String, Integer> lookup = new HashMap<>();
-	private static final Map<String, Integer> symtbl = new TreeMap<>();
+	private static Map<String, Integer> lookup;
+	private static Map<String, Integer> symtbl;
 
 	static {
 		initialize_maps();
@@ -26,6 +26,9 @@ public class Assembler {
 		for (Map.Entry<String, Integer> entry : codes.entrySet()) {
 			codes_inv.put(entry.getValue(), entry.getKey());
 		}
+		
+		lookup = new HashMap<>();
+		symtbl = new TreeMap<>();
 
 		lookup.put("r0", 0); lookup.put("r1", 1); lookup.put("r2", 2); lookup.put("r3", 3);
 		lookup.put("r4", 4); lookup.put("r5", 5); lookup.put("r6", 6); lookup.put("r7", 7);
@@ -70,6 +73,8 @@ public class Assembler {
 	}
 
 	public static void pass1(List<String> program) {
+		initialize_maps();
+		
 		for (int i = 0; i < program.size(); i++) {
 			String line = program.get(i).trim();
 			if (line.isEmpty() || line.startsWith(";")) {
@@ -193,7 +198,7 @@ public class Assembler {
 					
 					if (assembled_code > 0xffff) {
 						int inst_word = (int)(assembled_code >>> 16);
-						int imm_word = (int)(assembled_code & 0xffff);
+						int imm_word = (short)(assembled_code & 0xffff);
 						output.add(String.format("%s %s    (%s r%d,r%d,%d)",
 								tohex(pc), tohex(inst_word), codes_inv.get(inst_word & 0xfe00),
 								(inst_word & 0xf0) >> 4, (inst_word & 0xf), imm_word));
@@ -262,8 +267,8 @@ public class Assembler {
 					}
 				}
 			} catch (Exception e) {
-				output.add(String.format("**** ????    assemble failed (%s)", e.getMessage()));
-				output.add(String.format("             line %d --> \"%s\"", line_num, line.replace("\n", "")));
+				output.add(String.format("**** ????    assembler failed on line %d (%s)", line_num, e.getMessage()));
+				output.add(String.format("**** ????    --> \"%s\"", line.replace("\n", "")));
 				return -1;
 			}
 		}
