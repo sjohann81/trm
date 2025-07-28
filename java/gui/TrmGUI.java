@@ -301,7 +301,6 @@ class Gui extends JFrame implements ActionListener {
 			}
 		});
 
-		
 		textArea3 = new JTextArea(10, 10);
 		textArea3.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		textArea3.setEditable(false);
@@ -475,13 +474,10 @@ class Gui extends JFrame implements ActionListener {
 		bpClr.addActionListener(this);
 		
 		model = new DefaultListModel<String>();
-//		for (int i = 0; i < 50; i++)
-//			model.addElement("hey" + i);
-
 		list = new JList<String>(model);
 		list.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		JScrollPane listScroller = new JScrollPane(list);
-//		//list.setSelectedIndex(2);
+
 		gbcBp.gridx = 0;
 		gbcBp.gridy = 1;
 		gbcBp.gridheight = 2;
@@ -493,7 +489,6 @@ class Gui extends JFrame implements ActionListener {
 		gbc.gridwidth = 1;
 		gbc.gridx = 1; gbc.gridy = 1;
 		panel2.add(bpPanel, gbc);
-
 
 		tabbedPane.addTab("Code Editor", panel1);
 		tabbedPane.addTab("Assembler and Simulator", panel2);
@@ -690,22 +685,13 @@ class Gui extends JFrame implements ActionListener {
 		} catch (Exception e) {}
 	}
 	
-	private void updateTables() {
+	private void updateCode() {
 		try {
 			int rowIdx = rowIndexForValue(String.format("%04x", sim.getpc()));
 			table.clearSelection();
 			if (rowIdx >= 0) {
 				table.scrollRectToVisible(table.getCellRect(rowIdx, rowIdx, false));
 				table.setRowSelectionInterval(rowIdx, rowIdx);
-			
-//				symtable.clearSelection();
-//				for (int i = 0; i < symmodel.getRowCount(); i++) {
-//					Object value = symmodel.getValueAt(i, 0);
-//					if (tabmodel.getValueAt(rowIdx, 0).equals(value)) {
-//						symtable.scrollRectToVisible(symtable.getCellRect(i, i, false));
-//						symtable.setRowSelectionInterval(i, i);
-//					}
-//				}
 			}
 		} catch (Exception e) {}
 	}
@@ -767,7 +753,7 @@ class Gui extends JFrame implements ActionListener {
 			
 			if (ok == 0) {
 				fillMem();
-				updateTables();
+				updateCode();
 				model.removeAllElements();
 				
 				return true;
@@ -794,7 +780,7 @@ class Gui extends JFrame implements ActionListener {
 			
 			while (simrunning == true) {
 				if (auto == true) {
-					updateTables();
+					updateCode();
 					updateMem();
 					updateRegs();
 				}
@@ -803,7 +789,7 @@ class Gui extends JFrame implements ActionListener {
 
 				if (breakpointCheck()) {
 					go = false;
-					updateTables();
+					updateCode();
 					updateMem();
 					updateRegs();
 				} else {
@@ -863,7 +849,7 @@ class Gui extends JFrame implements ActionListener {
 		if (go)
 			cycles++;
 
-		updateTables();
+		updateCode();
 		updateMem();
 		updateRegs();
 		label.setText("CPU cycle: " + Integer.toString(cycles));

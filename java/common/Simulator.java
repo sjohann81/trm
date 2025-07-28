@@ -86,8 +86,6 @@ public class Simulator {
 	}
 	
 	private static int io(int address, int val) {
-//		String input = "";
-//		Scanner scan = new Scanner(System.in);
 		char data1, data2;
 		int retval = 0;
 		
