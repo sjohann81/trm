@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2024.2.20)  17 JUL 2025 16:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2024.2.20)  25 JUL 2025 10:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -517,31 +517,31 @@ Cap\'{\i }tulo 2.
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
-74.
+76.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [8] [9]
-Overfull \hbox (1.0418pt too wide) in paragraph at lines 529--529
-[][][]\OT1/pcr/m/n/8 ra = mem[rb + imm]| 
- []
-
-
-Overfull \hbox (1.0418pt too wide) in paragraph at lines 530--530
-[][][]\OT1/pcr/m/n/8 ra = mem[rb + imm]| 
- []
-
-
 Overfull \hbox (1.0418pt too wide) in paragraph at lines 531--531
 [][][]\OT1/pcr/m/n/8 ra = mem[rb + imm]| 
  []
 
 
 Overfull \hbox (1.0418pt too wide) in paragraph at lines 532--532
-[][][]\OT1/pcr/m/n/8 mem[rb + imm] = ra| 
+[][][]\OT1/pcr/m/n/8 ra = mem[rb + imm]| 
  []
 
 
 Overfull \hbox (1.0418pt too wide) in paragraph at lines 533--533
+[][][]\OT1/pcr/m/n/8 ra = mem[rb + imm]| 
+ []
+
+
+Overfull \hbox (1.0418pt too wide) in paragraph at lines 534--534
+[][][]\OT1/pcr/m/n/8 mem[rb + imm] = ra| 
+ []
+
+
+Overfull \hbox (1.0418pt too wide) in paragraph at lines 535--535
 [][][]\OT1/pcr/m/n/8 mem[rb + imm] = ra| 
  []
 
@@ -550,29 +550,29 @@ Cap\'{\i }tulo 3.
 [21
 
 ] [22] [23] [24] [25]
-Overfull \hbox (2.22581pt too wide) in paragraph at lines 1566--1566
+Overfull \hbox (2.22581pt too wide) in paragraph at lines 1568--1568
 []    \OT1/pcr/m/n/10.95 xor v0,v0,-1                ; v0 = not v0 (one's compl
 ement)[] 
  []
 
 
-Overfull \hbox (2.22581pt too wide) in paragraph at lines 1566--1566
+Overfull \hbox (2.22581pt too wide) in paragraph at lines 1568--1568
 []    \OT1/pcr/m/n/10.95 add v0,v0,1                 ; v0 = v0 + 1 (two's compl
 ement)[] 
  []
 
 [26]
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 1
-666.
+668.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1666.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1668.
 
  [27]
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 1730.
+nput line 1732.
 
 (./src/vars.s [28]) (./src/array.s [29]) (./src/arrayptr.s) (./src/arraybytes.s
 LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 1
@@ -583,21 +583,21 @@ File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 (./src/string.s) [31] [32] (./src/fcall.s) (./src/fcallbyref.s [33])
 (./src/fcallstack.s) [34] (./src/mul.s) (./src/div.s [35]) [36]
 Cap\'{\i }tulo 4.
+[37
 
-Overfull \hbox (2.22581pt too wide) in paragraph at lines 2025--2025
+]
+Overfull \hbox (2.22581pt too wide) in paragraph at lines 2040--2040
 []\OT1/pcr/m/n/10.95 <source> - assembly (.s) source code for 'a', 'r' and 'd' 
 modes,[] 
  []
 
-[37
-
-] [38] [39] [40] (./manual.aux)
+[38] [39] [40] [41] (./manual.aux)
 Package rerunfilecheck Info: File `manual.out' has not changed.
-(rerunfilecheck)             Checksum: C36767B69FEC01BB762C8B5C1AC3F06E;9507.
+(rerunfilecheck)             Checksum: E6E420F34BDDA2A5D3E7C895CE36F60F;9716.
  ) 
 Here is how much of TeX's memory you used:
- 12748 strings out of 477990
- 201079 string characters out of 5839147
+ 12751 strings out of 477990
+ 201110 string characters out of 5839147
  2150330 words of memory out of 5000000
  32279 multiletter control sequences out of 15000+600000
  522553 words of font info for 66 fonts, out of 8000000 for 9000
@@ -618,10 +618,10 @@ hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on manual.pdf (43 pages, 309524 bytes).
+Output written on manual.pdf (44 pages, 313263 bytes).
 PDF statistics:
- 961 PDF objects out of 1000 (max. 8388607)
- 877 compressed objects within 9 object streams
- 418 named destinations out of 1000 (max. 500000)
+ 970 PDF objects out of 1000 (max. 8388607)
+ 885 compressed objects within 9 object streams
+ 421 named destinations out of 1000 (max. 500000)
  425 words of extra memory for PDF output out of 10000 (max. 10000000)
 

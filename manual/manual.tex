@@ -44,7 +44,7 @@
 \begin{document}
 
 \pagestyle{empty}
-\title{\textbf{TRM CPU - Manual de referência}}
+\title{\textbf{Processador TRM - Manual de referência}}
 \author{Sérgio Johann Filho}
 
 \maketitle
@@ -311,25 +311,25 @@ o dado armazenado em um registrador é escrito na memória.
 
 \chapter{A arquitetura TRM}
 
-TRM (Tiny RISC machine) é uma arquitetura construída de acordo com a
-filosofia RISC. Essa arquitetura foi planejada com o objetivo de oferecer
-ao programador um conjunto de instruções básico, de maneira que uma
-quantidade reduzida de recursos de hardware seja necessária para 
-implementar seu conjunto de instruções\footnote{O conjunto de instruções
-foi definido com o intuito de minimizar a complexidade da arquitetura e
-ao mesmo tempo permitir a síntese de operações mais complexas por meio
-de poucas operações simples.}. Entre as decisões de projeto, foi utilizado
-um banco de registradores com propósito geral, não há qualificadores de
-estado (flags) para operações, não foram definidas unidades para
-multiplicação e divisão e há apenas um conjunto limitado de modos de
-endereçamento.
+O processador TRM (Tiny RISC machine) possui uma arquitetura planejada
+de acordo com a filosofia RISC. Essa arquitetura foi definida com o
+objetivo de oferecer ao programador um conjunto de instruções básico, de
+maneira que uma quantidade reduzida de recursos de hardware seja
+necessária para implementar seu conjunto de instruções\footnote{O conjunto
+de instruções foi definido com o intuito de minimizar a complexidade da
+arquitetura e ao mesmo tempo permitir a síntese de operações mais
+complexas por meio de poucas operações simples.}. Entre as decisões de
+projeto, foi utilizado um banco de registradores com propósito geral,
+não há qualificadores de estado (flags) para operações, não foram
+definidas unidades para multiplicação e divisão e há apenas um conjunto
+limitado de modos de endereçamento.
 
 Um pequeno conjunto de instruções foi definido na arquitetura TRM (25
 instruções básicas). Apesar do pequeno número de instruções, estas são 
-poderosas os suficiente para realizar todas as operações de máquinas com
+poderosas o suficiente para realizar todas as operações de máquinas com
 um maior número de instruções. Para isso, em algumas situações uma
 instrução pode ser utilizada de forma pouco ortodoxa ou uma combinação
-de instruções podem ser utilizadas para implementação de um comportamento
+de instruções pode ser utilizada para implementação de um comportamento
 mais elaborado. As instruções são separadas nas seguintes classes:
 
 \begin{enumerate}
@@ -341,21 +341,23 @@ mais elaborado. As instruções são separadas nas seguintes classes:
 \end{enumerate}
 
 Seguindo a filosofia RISC ao extremo, as instruções são definidas em uma
-representação binária que utiliza apenas um formato de instrução
-\footnote{Uma instrução pode ou não ser seguida de uma palavra para o
-armazenamento de um valor imediato (constante).}. Dessa forma, a lógica
-necessária para a decodificação de instruções é reduzida significativamente,
-comparado ao que seria necessário para decodificação de instruções com
-múltiplos formatos (como nas arquiteturas ARM e RISC-V por exemplo) ou
-instruções com tamanho variável (como na arquitetura x64 por exemplo).
+representação binária que utiliza apenas um formato de
+instrução\footnote{Uma instrução pode ou não ser seguida de uma palavra
+para o armazenamento de um valor imediato / literal (constante).}. Dessa
+forma, a lógica necessária para a decodificação de instruções é reduzida
+significativamente, comparado ao que seria necessário para decodificação
+de instruções com múltiplos formatos (como nas arquiteturas ARM e RISC-V
+por exemplo) ou instruções com tamanho variável (como na arquitetura x64
+por exemplo).
 
 \section{Registradores}
 
 Assim como outros processadores RISC, o TRM utiliza operações de
 transferência de dados (\textit{load / store}) para acesso à dados. Para
 que operações lógicas e aritméticas, comparação, deslocamento, entre
-outros possam ser execututadas, é necessário que os operandos sejam 
-primeiramente trazidos da memória em um ou mais registradores de
+outras possam ser execututadas, é necessário que os operandos\footnote{
+Operandos são valores utilizados para entrada para uma computação.}
+sejam  primeiramente trazidos da memória em um ou mais registradores de
 propósito geral (GPRs), ou que sejam utilizadas constantes no próprio
 fluxo de instruções.
 
@@ -1903,12 +1905,12 @@ modificados.
 
 \subsubsection{Procedimento para chamadas de função}
 
-Na função chamadora, são realizados os seguintes passos: a) Passar os
+\begin{itemize}
+\item Na função chamadora, são realizados os seguintes passos: a) Passar os
 argumentos nos registradores \textit{a0 - a3}; b) Configurar \textit{lr}
 com o endereço de retorno; c) Saltar para a função; d) No retorno, ler
 os valores retornados de \textit{a0 - a3}.
-
-Na função chamada, são realizados os seguintes passos: a) Salvar os
+\item Na função chamada, são realizados os seguintes passos: a) Salvar os
 registradores \textit{v0 - v7}, \textit{fp} e \textit{lr} na pilha,
 conforme necessário; b) (opcional) Copiar \textit{sp} para \textit{fp};
 c) (opcional) Alocar uma região da pilha para variáveis locais
@@ -1917,6 +1919,7 @@ valores de retorno em \textit{a0 - a3}; f) (opcional) Desalocar a pilha;
 g) Restaurar os registradores salvos (\textit{lr}, \textit{fp},
 \textit{v7 - v0}) da pilha; h) Retornar para a função chamadora usando
 \textit{lr}.
+\end{itemize}
 
 O exemplo abaixo ilustra o procedimento. Na função chamada não é feito
 o salvamento dos registradores \textit{v0 - v7}, tampouco \textit{fp}
@@ -2001,7 +2004,19 @@ $ make
 $ cd ..
 \end{verbatim}
 
-A ferramenta pode ser invocada com o comando:
+Existem duas versões da ferramenta. A primeira possui uma interface 
+gráfica que integra um simples editor, montador e simulador da arquitetura.
+A segunda possui uma interface que pode ser controlada por linha de
+comando. Para carregar a ferramenta gráfica, utilize o comando:
+
+\begin{verbatim}
+$ java -jar java/TrmGUI.jar
+\end{verbatim}
+
+Irá ser apresentada a interface gráfica da ferramenta. As funcionalidades
+de edição, montagem e simulação podem ser selecionada por diferentes
+\textit{tabs}. A ferramenta pode de linha de comando pode ser invocada
+com:
 
 \begin{verbatim}
 $ java -jar java/Trm.jar
@@ -2026,9 +2041,20 @@ Syntax: java -jar Trm.jar <mode> <source> <output>
 
 \section{Montagem}
 
-O processo de montagem de um programa pode ser realizado fornecendo-se
-à ferramenta o código fonte e um arquivo de saída. No arquivo de saída
-será armazenado o código objeto gerado e eventuais erros. Exemplo:
+Na ferramenta gráfica, o processo de montagem é simples, bastando 
+inicialmente carregar um código fonte no editor de texto (\textit{Code
+Editor})\footnote{Esse processo pode ser realizado selecionando-se a
+opção \textit{File - Open} ou colando-se um texto no editor diretamente.}
+e selecionar a tab \textit{Assembler and Simulator}. Para montar o código,
+seleciona-se a opção \textit{Assemble/Exec}, acessível por meio do menu
+superior ou botão no lado direito da interface. Após a montagem do
+programa, será apresentada a listagem do código objeto, tabela de 
+símbolos e opções para simulação.
+
+Para a ferramenta de linha de comando, o processo de montagem de um
+programa pode ser realizado fornecendo-se à ferramenta o código fonte e
+um arquivo de saída. No arquivo de saída será armazenado o código objeto
+gerado e eventuais erros. Exemplo:
 
 \begin{verbatim}
 $ java -jar java/Trm.jar a examples/01-add.s 01-add.txt
@@ -2063,6 +2089,21 @@ A partir do código objeto gerado no passo anterior, pode-se realizar uma
 simulação do mesmo. O simulador irá verificar se o código objeto está
 correto antes de iniciar a simulação.
 
+Na ferramenta gráfica, a simulação pode ser realizada de uma só vez
+(opção \textit{Run}), passo a passo de forma automática (opção
+\textit{Auto Step}) ou manualmente (opção \textit{Stop/Step}). O processo
+de simulação na ferramenta gráfica já inclui depuração. A depuração
+inclui um acompanhamento da execução, onde é feito um apontamento da
+instrução na listagem do código objeto antes de sua execução, bem como
+referências a símbolos. Após a execução de uma instrução, é atualizado
+o banco de registradores, o contador de programa, a memória (caso a
+última instrução referencie a mesma) e é feito o apontamento da próxima
+instrução a ser executada.
+
+Na ferramenta por linha de comando, a simulação pode ser realizada
+passando-se como argumento a opção de simulação e um arquivo com o código
+objeto.
+
 \begin{verbatim}
 $ java -jar java/Trm.jar s 01-add.txt
 [program (code + data): 32 bytes]
@@ -2073,13 +2114,13 @@ $ java -jar java/Trm.jar s 01-add.txt
 8 cycles
 \end{verbatim}
 
-\section{Modo combinado (montagem e simulação)}
+\section{Modo combinado (montagem e simulação, linha de comando)}
 
 O modo de execução de programas combinado é composto pela montagem e
-simulação em um único passo. Esse modo pode ser útil quando se deseja
-desenvolver uma aplicação, pois evita-se um passo intermediário. Para
-invocar o modo combinado para execução do mesmo exemplo anterior, pode
-ser utilizado o seguinte comando:
+simulação em um único passo e existe na ferramenta de linha de comando.
+Esse modo pode ser útil quando se deseja desenvolver uma aplicação, pois
+evita-se um passo intermediário. Para invocar o modo combinado para
+execução do mesmo exemplo anterior, pode ser utilizado o seguinte comando:
 
 \begin{verbatim}
 $ java -jar java/Trm.jar r examples/01-add.s
@@ -2103,14 +2144,14 @@ O resultado do comando será o seguinte:
 8 cycles
 \end{verbatim}
 
-\section{Modo depuração}
+\section{Modo depuração (linha de comando)}
 
 No modo depuração, assim como no modo combinado, são realizados os
-processos de montagem e simulação do código em um único passo. A
-diferença do modo depuração para o modo combinado é que, o segundo
-executa o programa até o final já o primeiro, permite que o usuário
-execute o programa de forma interativa, instrução por instrução. Além
-disso, esse modo possui recursos como endereço para parada
+processos de montagem e simulação do código em um único passo (ferramenta
+de linha de comando). A diferença do modo depuração para o modo combinado
+é que, o segundo executa o programa até o final já o primeiro, permite
+que o usuário execute o programa de forma interativa, instrução por
+instrução. Além disso, esse modo possui recursos como endereço para parada
 (\textit{breakpoint}), reinicio do programa, listagem do programa,
 listagem da tabela de símbolos e visualização da memória (\textit{memory
 dump}). Para o programa usado nos exemplos anteriores, o processo é
