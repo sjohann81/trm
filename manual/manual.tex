@@ -80,29 +80,28 @@ Um sistema computacional típico consiste dos seguintes elementos principais:
 \item Portas de entrada e saída
 \end{itemize}
 
-A memória é usada para armazenar \textit{instruções}, que são porções de
-informação que definem as atividades a serem executadas pela CPU, assim
-como \textit{dados}, que são porções de informação que são processados
-pelas instruções executadas. Um agrupamento de instruções e dados logicamente
+A memória é usada para armazenar \textit{instruções}, que são comandos
+que definem as atividades a serem executadas pela CPU, assim como
+\textit{dados}, que são informações processadas pelas instruções
+executadas. Um agrupamento de instruções e dados logicamente
 relacionados e armazenados na memória são chamados de \textit{programa}.
 A CPU lê cada instrução da memória em uma sequência determinada e utiliza
 essa sequência para realizar o processamento, executando as instruções.
 Se as instruções lidas e executadas pela CPU forem coerentes e lógicas,
 o processamento do programa irá produzir resultado válido.
 
-A CPU pode acessar qualquer informação na memória de forma eficiente, no
-entanto a memória nem sempre possui tamanho o suficiente para armazenar
-toda a informação necessária para uma aplicação específica. Isso pode ser
-resolvido por meio de uma ou mais \textit{portas}. A CPU pode endereçar
-essas portas e acessar dados por meio destas, de maneira que torna-se
-possível enviar e receber dados de dispositivos periféricos. As portas
-podem ser de entrada ou saída. Uma porta de entrada pode ser usada para
-leitura de informação externa (de um dispositivo periférico como um
-teclado, por exemplo) e uma porta de saída pode ser usada para escrita
-de informação para o exterior (para um periférico como um monitor, por
-exemplo).
+A CPU pode acessar qualquer informação na memória, no entanto a memória
+nem sempre possui tamanho o suficiente para armazenar toda a informação
+necessária para uma aplicação específica. Isso pode ser resolvido por
+meio de uma ou mais \textit{portas}. A CPU pode endereçar essas portas
+e acessar dados por meio destas, de maneira que torna-se possível enviar
+e receber dados de dispositivos periféricos. As portas podem ser de
+entrada ou saída. Uma porta de entrada pode ser usada para leitura de
+informação externa (de um dispositivo periférico como um teclado, por
+exemplo) e uma porta de saída pode ser usada para escrita de informação
+para o exterior (para um periférico como um monitor, por exemplo).
 
-Em suma, a CPU é resposável por unificar todas as partes de um sistema
+Em suma, a CPU é responsável por unificar todas as partes de um sistema
 computacional. Ela controla as funções realizadas por outros componentes,
 sequenciando todos os eventos. A CPU deve poder buscar instruções,
 decodificar estas e as executar. Ela também pode referenciar a memória
@@ -111,7 +110,7 @@ portas para comunicação com dispositivos periféricos.
 
 \section{A arquitetura de uma CPU}
 
-Geralmente uma unidade central de processamento consiste das seguintes
+Uma unidade central de processamento tipicamente consiste das seguintes
 unidades funcionais interconectadas:
 
 \begin{itemize}
@@ -140,7 +139,7 @@ o que inclui o número de instruções, tamanho da palavra, número de
 \textit{registradores}, modos de endereçamento, estratégia de
 sequenciamento para execução de instruções, entre outros detalhes. Muitos
 desses detalhes são expostos no \textit{formato de instrução}, composto
-por diversos campos de bits que podem ser decodificados processador
+por diversos campos de bits que podem ser decodificados pelo processador
 durante o processo de execução de cada instrução.
 
 Registradores são unidades para o armazenamento de informação de forma
@@ -153,12 +152,13 @@ pelo programador.
 
 Os registradores de propósito geral armazenam operandos a serem manipulados
 pela \textit{unidade lógica e aritmética} (ALU), bem como o resultado
-do processamento de uma instrução. Uma instrução típica pode solicitar
-uma operação se soma de dois valores à ALU, e armazenar o resultado. De
-forma geral, os registradores de propósito geral (GPRs) são implementados
-em um vetor (banco) de registradores. Em uma operação típica, são
-selecionados dois registradores com os operandos (fontes) a serem 
-processadors e um registrador (destino) para o armazenamento do resultado.
+do processamento de uma instrução. Por exemplo, uma instrução pode
+solicitar uma operação sobre de dois valores à ALU, e armazenar o
+resultado. De forma geral, os registradores de propósito geral (GPRs)
+ão implementados em um vetor (banco) de registradores. Em uma operação
+típica, são selecionados dois registradores com os operandos (fontes) a
+serem processados e um registrador (destino) para o armazenamento do
+resultado.
 
 De maneira geral, são incluídos em uma CPU registradores que podem ser
 usados para o armazenamento de operandos e resultados intermediários
@@ -166,8 +166,9 @@ do processamento. A disponibilidade de registradores de propósito geral
 elimina a necessidade de acessos adicionais à memória, o que aumenta
 a velocidade do processamento e a sua eficiência, uma vez que acessos
 à memória tendem a ser mais lentos que acessos à registradores\footnote{
-Acessos adicionais à memória podem ser complicados, uma vez que dependem
-do desempenho do sistema de memória.}.
+Acessos adicionais à memória independem dos acessos realizados para a
+execução das instruções. Além disso, podem existir complicações
+adicionais relacionadas ao desempenho do sistema de memória.}.
 
 \subsection{Contador de programa (PC)}
 
@@ -184,7 +185,7 @@ instrução.
 As instruções de um programa são armazenadas sequencialmente na memória,
 de tal forma que endereços menores armazenam as primeiras instruções de
 um programa, já endereços maiores instruções posteriores. Essa regra pode
-ser modificada caso sejam utilizadas instrução de desvio (ou saltos) no
+ser modificada caso sejam utilizadas instruções de desvio (ou saltos) no
 programa. Uma instrução de desvio (transferência de controle) contém uma
 referência ao endereço da instrução a ser executada no caso do desvio ser
 tomado. A próxima instrução pode ser armazenada em qualquer lugar da
@@ -242,11 +243,12 @@ e operações de deslocamento.
 
 Além disso, a ALU possui sinais (\textit{flags}) que especificam
 determinadas condições durante a execução de operações lógicas e
-aritméticas\footnote{Nem sempre os sinais de condição são apresentados
-ao programador, ou seja, podem ser apenas utilizados internamente
-durante o processamento.}. È possível dessa forma realizar a comparação
-de valores e desvios condicionais, dependendo dos valores de tais sinais
-após o cálculo do resultado da última operação.
+aritméticas\footnote{Nem sempre os sinais de condição (\textit{flags} ou
+qualificadores de estado) são apresentados ao programador, ou seja, podem 
+ser apenas utilizados internamente durante o processamento.}. É possível
+dessa forma realizar a comparação de valores e desvios condicionais,
+dependendo dos valores de tais sinais após o cálculo do resultado da
+última operação.
 
 \subsection{Decodificação de instruções e unidade de controle}
 
@@ -303,15 +305,15 @@ Uma operação de busca é um tipo especial de operação de leitura realizada
 na memória, onde a instrução é trazida para o processador para ser
 executada. Uma instrução pode solicitar acessos adicionais à memória
 (para acesso à dados). Nesse caso, a CPU gera novamente uma operação
-de leitura ou escrita à memória, enviando o endereço solicitado pela
-instrução à memória. Em uma operação de leitura, o dado é transferido
-para um registrador de propósito geral e em uma operação de escrita,
-o dado armazenado em um registrador é escrito na memória.
+de leitura ou escrita, enviando o endereço solicitado pela instrução
+à memória. Em uma operação de leitura, o dado é transferido para um
+registrador de propósito geral e em uma operação de escrita, o dado
+armazenado em um registrador é escrito na memória.
 
 
 \chapter{A arquitetura TRM}
 
-O processador TRM (Tiny RISC machine) possui uma arquitetura planejada
+O processador TRM (Tiny RISC Machine) possui uma arquitetura planejada
 de acordo com a filosofia RISC. Essa arquitetura foi definida com o
 objetivo de oferecer ao programador um conjunto de instruções básico, de
 maneira que uma quantidade reduzida de recursos de hardware seja
@@ -343,8 +345,8 @@ mais elaborado. As instruções são separadas nas seguintes classes:
 Seguindo a filosofia RISC ao extremo, as instruções são definidas em uma
 representação binária que utiliza apenas um formato de
 instrução\footnote{Uma instrução pode ou não ser seguida de uma palavra
-para o armazenamento de um valor imediato / literal (constante).}. Dessa
-forma, a lógica necessária para a decodificação de instruções é reduzida
+para o armazenamento de um valor imediato, que atua como uma constante.}.
+Dessa forma, a lógica necessária para a decodificação de instruções é reduzida
 significativamente, comparado ao que seria necessário para decodificação
 de instruções com múltiplos formatos (como nas arquiteturas ARM e RISC-V
 por exemplo) ou instruções com tamanho variável (como na arquitetura x64
@@ -353,8 +355,8 @@ por exemplo).
 \section{Registradores}
 
 Assim como outros processadores RISC, o TRM utiliza operações de
-transferência de dados (\textit{load / store}) para acesso à dados. Para
-que operações lógicas e aritméticas, comparação, deslocamento, entre
+transferência de dados (\textit{load / store}) para acesso à variáveis.
+Para que operações de lógica e aritmética, comparação, deslocamento, entre
 outras possam ser execututadas, é necessário que os operandos\footnote{
 Operandos são valores utilizados para entrada para uma computação.}
 sejam  primeiramente trazidos da memória em um ou mais registradores de
@@ -366,7 +368,8 @@ utilizados para qualquer finalidade\footnote{Exceto \textit{r0}, que
 possui o seu valor constante zero.}, sendo apenas recomendado seu uso em
 função das convenções apresentadas abaixo. Ao utilizar diferentes
 registradores em um programa, um programador tipicamente referencia os
-mesmos por seu nome, onde é indicada a sua função.
+mesmos por seu nome, onde é indicada a sua função. A representação dos
+registradores pelo seu nome facilita a leitura do código pelo programador.
 
 \begin{table}[htb!]
 \centering
@@ -396,14 +399,15 @@ Além dos 16 registradores de propósito geral (GPRs), é definido na
 arquitetura um registrador com a finalidade de contador de programa (PC).
 Esse registrador aponta para a instrução corrente do programa, e não pode
 ser modificado diretamente pelo programador. A cada instrução decodificada,
-o PC avança para a próxima posição\footnote{Instruções que possuem um
-operando imadiato armazenam esse operando como uma constante na próxima
-posição de memória após a instrução, dessa forma essas instruções
-causam um avanço de duas posições no PC.}. Instruções de transferência
+o PC avança para a próxima posição. Instruções de transferência
 de fluxo (desvios) podem fazer com que o PC seja atualizado com o
 destino do desvio, caso este seja tomado. As instruções possuem um
-tamanho de 16 bits, portanto o contador de programa é incrementado com
-esse tamanho.
+tamanho de 16 bits (ou 32 bits para instruções com valores imediatos),
+portanto o contador de programa é incrementado com esse tamanho\footnote{
+Instruções que possuem um operando imadiato armazenam esse
+operando como uma constante na próxima posição de memória após a
+instrução, dessa forma essas instruções causam um avanço de duas
+posições no PC.}.
 
 \section{Formato de instruções}
 
@@ -425,8 +429,8 @@ $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
 
 Os campos \textit{Opcode} e \textit{Opcode 2} definem o tipo de operação
 e a operação específica respectivamente. O campo \textit{Imm} define se
-a operação possui ou não um campo imediato. Os campos \textit{Reg A} e 
-\textit{Reg B} definem os registradores a serem utilizados na operação.
+a instrução possui ou não um campo imediato. Os campos \textit{Reg A} e 
+\textit{Reg B} definem os registradores a serem utilizados na instrução.
 
 \subsection{Instruções regulares}
 
@@ -469,11 +473,12 @@ associado à instrução é usado como fonte. Exemplos:
 \section{O conjunto de instruções}
 
 O conjunto de instruções definido na arquitetura é apresentado a seguir.
-Diversos códigos de operação são reservados para extensões futuras. As
-instruções possuem um tamanho de 16 bits, associado a uma boa densidade
-do código.
+Diversos códigos de operação são reservados para extensões futuras. O
+comportamento do conjunto de instruções pode ser sumarizado de acordo
+com as observações:
 
-Em operações lógicas e aritméticas, comparações e operações de deslocamento
+\begin{itemize}
+\item Em operações lógicas e aritméticas, comparações e operações de deslocamento
 que possuem o formato de instrução regular (sem campo imediato),
 \textit{Reg A} é utilizado como operando \textit{fonte 1} e como destino
 para o resultado da operação e \textit{Reg B} é utilizado como operando
@@ -482,7 +487,7 @@ utilizado como \textit{destino} para o resultado, \textit{Reg B} é
 utilizado como operando \textit{fonte 1} e a palavra seguinte à instrução
 contendo o valor imaditato é utilizada como operando \textit{fonte 2}.
 
-Em operações de transferência de dados que possuem o formato de instrução
+\item Em operações de transferência de dados que possuem o formato de instrução
 regular, \textit{Reg A} é utilizado como operando \textit{fonte 1}
 (instruções de armazenamento) e como \textit{destino} para o resultado
 da operação (instruções de carga) e \textit{Reg B} é utilizado como
@@ -492,7 +497,7 @@ com formato imediato, Os registradores possuem o mesmo papel, no entanto
 (\textit{Reg B}), sendo realizado o cálculo do endereço \textit{base
 + deslocamento}.
 
-Em operações de transferência de controle que possuem o formato de
+\item Em operações de transferência de controle que possuem o formato de
 instrução regular (sem campo imediato), \textit{Reg A} é utilizado como
 operando \textit{fonte 1}, \textit{zero} é utilizado como \textit{fonte 2}
 e \textit{Reg B} é utilizado como endereço da memória. Nas operações com
@@ -500,6 +505,7 @@ formato imediato, \textit{Reg A} é utilizado \textit{fonte 1},
 \textit{Reg B} é utilizado como operando \textit{fonte 2} e a palavra
 seguinte à instrução contendo o valor imaditato é utilizada como
 endereço da memória.
+\end{itemize}
 
 A tabela abaixo apresenta um quadro das instruções implementadas na
 arquitetura\footnote{A instrução \textit{hlt} não é uma instrução real
@@ -554,16 +560,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 0} & \texttt{0 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item AND Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] and GPR[Reg B]}
-\item AND Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] and Immediate}
+\item AND ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] and GPR[rb]}
+\item AND ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] and Immediate}
 \end{itemize}
 
 \subsubsection{OR - logical or (bitwise logical sum)}
@@ -575,16 +581,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 0} & \texttt{0 0 1 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item OR Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] or GPR[Reg B]}
-\item OR Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] or Immediate}
+\item OR ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] or GPR[rb]}
+\item OR ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] or Immediate}
 \end{itemize}
 
 \subsubsection{XOR - logical exclusive or (bitwise logical difference)}
@@ -596,16 +602,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 0} & \texttt{0 0 1 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item XOR Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] xor GPR[Reg B]}
-\item XOR Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] xor Immediate}
+\item XOR ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] xor GPR[rb]}
+\item XOR ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] xor Immediate}
 \end{itemize}
 
 \subsubsection{ADD - arithmetic add}
@@ -616,16 +622,16 @@ Soma dois valores e armazena o resultado em um registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 0} & \texttt{0 1 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item ADD Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] + GPR[Reg B]}
-\item ADD Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] + Immediate}
+\item ADD ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] + GPR[rb]}
+\item ADD ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] + Immediate}
 \end{itemize}
 
 \subsubsection{SUB - arithmetic subtract}
@@ -636,16 +642,16 @@ Subtrai dois valores e armazena o resultado em um registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 0} & \texttt{0 1 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item SUB Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] - GPR[Reg B]}
-\item SUB Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] - Immediate}
+\item SUB ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] - GPR[rb]}
+\item SUB ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] - Immediate}
 \end{itemize}
 
 
@@ -661,16 +667,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 1} & \texttt{0 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item TLT Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] < GPR[Reg B] ? 1 : 0}
-\item TLT Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] < Immediate ? 1 : 0}
+\item TLT ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] < GPR[rb] ? 1 : 0}
+\item TLT ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] < Immediate ? 1 : 0}
 \end{itemize}
 
 \subsubsection{TGE - test if greater or equal}
@@ -683,16 +689,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 1} & \texttt{0 0 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item TGE Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] >= GPR[Reg B] ? 1 : 0}
-\item TGE Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] >= Immediate ? 1 : 0}
+\item TGE ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] >= GPR[rb] ? 1 : 0}
+\item TGE ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] >= Immediate ? 1 : 0}
 \end{itemize}
 
 \subsubsection{TBL - test if below}
@@ -705,16 +711,16 @@ armazenado em um registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 1} & \texttt{0 1 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item TBL Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] < GPR[Reg B] ? 1 : 0}
-\item TBL Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] < Immediate ? 1 : 0}
+\item TBL ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] < GPR[rb] ? 1 : 0}
+\item TBL ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] < Immediate ? 1 : 0}
 \end{itemize}
 
 \subsubsection{TAE - test if above or equal}
@@ -727,16 +733,16 @@ resultado armazenado em um registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 1} & \texttt{0 1 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item TAE Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] >= GPR[Reg B] ? 1 : 0}
-\item TAE Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] >= Immediate ? 1 : 0}
+\item TAE ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] >= GPR[rb] ? 1 : 0}
+\item TAE ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] >= Immediate ? 1 : 0}
 \end{itemize}
 
 \subsubsection{TEQ - test if equal}
@@ -749,16 +755,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 1} & \texttt{1 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item TEQ Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] == GPR[Reg B] ? 1 : 0}
-\item TEQ Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] == Immediate ? 1 : 0}
+\item TEQ ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] == GPR[rb] ? 1 : 0}
+\item TEQ ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] == Immediate ? 1 : 0}
 \end{itemize}
 
 \subsubsection{TNE - test if not equal}
@@ -771,16 +777,16 @@ registrador.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 1} & \texttt{1 0 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item TNE Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] != GPR[Reg B] ? 1 : 0}
-\item TNE Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] != Immediate ? 1 : 0}
+\item TNE ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] != GPR[rb] ? 1 : 0}
+\item TNE ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] != Immediate ? 1 : 0}
 \end{itemize}
 
 
@@ -796,16 +802,16 @@ resultado.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 1} & \texttt{1 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item LSL Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] << GPR[Reg B]}
-\item LSL Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] << Immediate}
+\item LSL ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] << GPR[rb]}
+\item LSL ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] << Immediate}
 \end{itemize}
 
 \subsubsection{LSR - logical shift right}
@@ -818,16 +824,16 @@ registrador. Zeros são inseridos na parte mais significativa do resultado.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 1} & \texttt{1 0 1 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item LSR Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] >>> GPR[Reg B]}
-\item LSR Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] >>> Immediate}
+\item LSR ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] >>> GPR[rb]}
+\item LSR ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] >>> Immediate}
 \end{itemize}
 
 \subsubsection{ASR - arithmetic shift right}
@@ -841,16 +847,16 @@ do resultado, preservando o sinal.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 0 1} & \texttt{1 0 1 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item ASR Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg A] >> GPR[Reg B]}
-\item ASR Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ GPR[Reg B] >> Immediate}
+\item ASR ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[ra] >> GPR[rb]}
+\item ASR ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ GPR[rb] >> Immediate}
 \end{itemize}
 
 
@@ -859,46 +865,46 @@ $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
 \subsubsection{LDW - load word}
 
 Transfere uma palavra da memória para um registrador. O endereço acessado
-deve ser alinhado.
+deve ser alinhado ao tamanho da palavra (16 bits).
 
 \begin{table}[htb!]
 \centering
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 1 0} & \texttt{0 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item LDW Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ MEM[Reg B]}
-\item LDW Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ MEM[Reg B + Immediate]}
+\item LDW ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ MEM[rb]}
+\item LDW ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ MEM[rb + Immediate]}
 \end{itemize}
 
 \subsubsection{LDB - load byte}
 
 Transfere um byte da memória para um registrador. O registrador de
 destino que armazena o resultado tem o byte carregado na parte menos
-significativa, sendo o sinal preservado.
+significativa, sendo o sinal preservado (ocorre extensão de sinal).
 
 \begin{table}[htb!]
 \centering
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 1 0} & \texttt{0 0 1 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item LDB Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ SEXT(MEM[Reg B]\textsubscript{<7:0>})}
-\item LDB Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ SEXT(MEM[Reg B + Immediate]\textsubscript{<7:0>})}
+\item LDB ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ SEXT(MEM[rb]\textsubscript{<7:0>})}
+\item LDB ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ SEXT(MEM[rb + Immediate]\textsubscript{<7:0>})}
 \end{itemize}
 
 \subsubsection{LBU - load byte unsigned}
@@ -912,38 +918,38 @@ significativa, e a parte mais significativa preenchida com zeros.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 1 0} & \texttt{0 0 1 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item LBU Reg A, Reg B
-\subitem \texttt{GPR[Reg A] $\leftarrow$ ZEXT(MEM[Reg B]\textsubscript{<7:0>})}
-\item LBU Reg A, Reg B, Immediate
-\subitem \texttt{GPR[Reg A] $\leftarrow$ ZEXT(MEM[Reg B + Immediate]\textsubscript{<7:0>})}
+\item LBU ra, rb
+\subitem \texttt{GPR[ra] $\leftarrow$ ZEXT(MEM[rb]\textsubscript{<7:0>})}
+\item LBU ra, rb, Immediate
+\subitem \texttt{GPR[ra] $\leftarrow$ ZEXT(MEM[rb + Immediate]\textsubscript{<7:0>})}
 \end{itemize}
 
 \subsubsection{STW - store word}
 
 Transfere uma palavra para memória a partir de um registrador. O endereço
-acessado deve ser alinhado.
+acessado deve ser alinhado ao tamanho da palavra (16 bits).
 
 \begin{table}[htb!]
 \centering
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 1 0} & \texttt{0 1 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item STW Reg A, Reg B
-\subitem \texttt{MEM[Reg B] $\leftarrow$ GPR[Reg A]}
-\item STW Reg A, Reg B, Immediate
-\subitem \texttt{MEM[Reg B + Immediate] $\leftarrow$ GPR[Reg A]}
+\item STW ra, rb
+\subitem \texttt{MEM[rb] $\leftarrow$ GPR[ra]}
+\item STW ra, rb, Immediate
+\subitem \texttt{MEM[rb + Immediate] $\leftarrow$ GPR[ra]}
 \end{itemize}
 
 \subsubsection{STB - load byte}
@@ -956,16 +962,16 @@ de fonte tem o byte carregado da parte menos significativa.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{0 1 0} & \texttt{0 1 1 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item STB Reg A, Reg B
-\subitem \texttt{MEM[Reg B] $\leftarrow$ GPR[Reg A]\textsubscript{<7:0>}}
-\item STB Reg A, Reg B, Immediate
-\subitem \texttt{MEM[Reg B + Immediate] $\leftarrow$ GPR[Reg A]\textsubscript{<7:0>}}
+\item STB ra, rb
+\subitem \texttt{MEM[rb] $\leftarrow$ GPR[ra]\textsubscript{<7:0>}}
+\item STB ra, rb, Immediate
+\subitem \texttt{MEM[rb + Immediate] $\leftarrow$ GPR[ra]\textsubscript{<7:0>}}
 \end{itemize}
 
 
@@ -980,16 +986,16 @@ verdadeiro, o valor do PC é atualizado com o endereço alvo.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 0} & \texttt{0 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item BLT Reg A, Reg B
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] < 0 ? GPR[Reg B] : PC + 2}
-\item BLT Reg A, Reg B, Immediate
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] < GPR[Reg B] ? Immediate :  PC + 2}
+\item BLT ra, rb
+\subitem \texttt{PC $\leftarrow$ GPR[ra] < 0 ? GPR[rb] : PC + 2}
+\item BLT ra, rb, Immediate
+\subitem \texttt{PC $\leftarrow$ GPR[ra] < GPR[rb] ? Immediate :  PC + 2}
 \end{itemize}
 
 \subsubsection{BGE - branch if greater or equal}
@@ -1001,16 +1007,16 @@ seja verdadeiro, o valor do PC é atualizado com o endereço alvo.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 0} & \texttt{0 0 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item BGE Reg A, Reg B
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] >= 0 ? GPR[Reg B] : PC + 2}
-\item BGE Reg A, Reg B, Immediate
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] >= GPR[Reg B] ? Immediate :  PC + 2}
+\item BGE ra, rb
+\subitem \texttt{PC $\leftarrow$ GPR[ra] >= 0 ? GPR[rb] : PC + 2}
+\item BGE ra, rb, Immediate
+\subitem \texttt{PC $\leftarrow$ GPR[ra] >= GPR[rb] ? Immediate :  PC + 2}
 \end{itemize}
 
 \subsubsection{BBL - branch if below}
@@ -1023,16 +1029,16 @@ alvo.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 0} & \texttt{0 1 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item BBL Reg A, Reg B
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] < 0 ? GPR[Reg B] : PC + 2}
-\item BBL Reg A, Reg B, Immediate
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] < GPR[Reg B] ? Immediate :  PC + 2}
+\item BBL ra, rb
+\subitem \texttt{PC $\leftarrow$ GPR[ra] < 0 ? GPR[rb] : PC + 2}
+\item BBL ra, rb, Immediate
+\subitem \texttt{PC $\leftarrow$ GPR[ra] < GPR[rb] ? Immediate :  PC + 2}
 \end{itemize}
 
 \subsubsection{BAE - branch if above or equal}
@@ -1045,16 +1051,16 @@ com o endereço alvo.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 0} & \texttt{0 1 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item BAE Reg A, Reg B
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] >= 0 ? GPR[Reg B] : PC + 2}
-\item BAE Reg A, Reg B, Immediate
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] >= GPR[Reg B] ? Immediate :  PC + 2}
+\item BAE ra, rb
+\subitem \texttt{PC $\leftarrow$ GPR[ra] >= 0 ? GPR[rb] : PC + 2}
+\item BAE ra, rb, Immediate
+\subitem \texttt{PC $\leftarrow$ GPR[ra] >= GPR[rb] ? Immediate :  PC + 2}
 \end{itemize}
 
 \subsubsection{BEQ - branch if equal}
@@ -1066,16 +1072,16 @@ verdadeiro, o valor do PC é atualizado com o endereço alvo.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 0} & \texttt{1 0 0 0} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item BEQ Reg A, Reg B
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] == 0 ? GPR[Reg B] : PC + 2}
-\item BEQ Reg A, Reg B, Immediate
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] == GPR[Reg B] ? Immediate :  PC + 2}
+\item BEQ ra, rb
+\subitem \texttt{PC $\leftarrow$ GPR[ra] == 0 ? GPR[rb] : PC + 2}
+\item BEQ ra, rb, Immediate
+\subitem \texttt{PC $\leftarrow$ GPR[ra] == GPR[rb] ? Immediate :  PC + 2}
 \end{itemize}
 
 \subsubsection{BNE - branch if not equal}
@@ -1087,16 +1093,16 @@ seja verdadeiro, o valor do PC é atualizado com o endereço alvo.
 \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 \hline
 $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
-\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{Reg A} & \textit{Reg B} \\ \hline
+\textit{Opcode} & \textit{Opcode 2} & \textit{Imm} & \textit{ra} & \textit{rb} \\ \hline
 \texttt{1 0 0} & \texttt{1 0 0 1} & \texttt{i} & \texttt{r r r r} & \texttt{r r r r} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
-\item BNE Reg A, Reg B
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] != 0 ? GPR[Reg B] : PC + 2}
-\item BNE Reg A, Reg B, Immediate
-\subitem \texttt{PC $\leftarrow$ GPR[Reg A] != GPR[Reg B] ? Immediate :  PC + 2}
+\item BNE ra, rb
+\subitem \texttt{PC $\leftarrow$ GPR[ra] != 0 ? GPR[rb] : PC + 2}
+\item BNE ra, rb, Immediate
+\subitem \texttt{PC $\leftarrow$ GPR[ra] != GPR[rb] ? Immediate :  PC + 2}
 \end{itemize}
 
 
@@ -1104,7 +1110,7 @@ $I_{<15:13>}$ & $I_{<12:9>}$ & $I_{<8>}$ & $I_{<7:4>}$ & $I_{<3:0>}$  \\ \hline
 
 \subsection{Registrador}
 
-No modo de endereçamento a registrador, dois registradores são utilizados
+No modo de endereçamento a registrador, dois registradores são referenciados
 no formato de instrução. Os dois registradores são utilizados como
 operandos, sendo o primeiro também utilizado para o armazenamento do
 resultado da operação.
@@ -1124,24 +1130,24 @@ a informação referente à instrução e os operandos. Exemplos:
 \end{tabular}
 \end{table}
 
-\subsection{Registrador com imediato (literal)}
+\subsection{Registrador com imediato}
 
 No modo de endereçamento registrador com imediato, dois registradores
-são utilizados no formato de instrução, além de um valor literal. O
-segundo registrador e o valor literal são utilizados como operandos, 
+são referenciados no formato de instrução, além de um valor literal. O
+segundo registrador e o valor imediato são utilizados como operandos, 
 sendo o primeiro registrador utilizado para o armazenamento do resultado
-da operação. Caso \textit{r0} for utilizado como o primeiro registrador,
+da operação. Caso \textit{r0} for referenciado como o primeiro registrador,
 o resultado da operação será descartado (exceto em desvios condicionais).
-Caso \textit{r0} for utilizado como segundo registrador, a instrução
-poderá resultar em uma carga do valor literal no primeiro registrador,
-o que é útil para a carga de constantes. Caso o valor literal for zero,
-a instrução poderá resultar na cópia do valor de um registrador para 
-outro.
+Caso \textit{r0} for referenciado como segundo registrador, a instrução
+poderá resultar em uma carga do valor imediato no primeiro registrador,
+o que é útil para a carga de constantes ou valores literais. Caso o valor
+imediato for zero, a instrução poderá resultar na cópia do valor de um
+registrador para outro.
 
 O tamanho total da instrução é de 4 bytes (2 palavras). A primeira 
 palavra contém a informação referente à instrução, o registrador para
 o armazenamento do resultado e o primeiro operando. A segunda palavra
-contém o valor literal, utilizado como segundo operando. Exemplos:
+contém o valor imediato, utilizado como segundo operando. Exemplos:
 
 \begin{table}[htb!]
 \centering
@@ -1163,14 +1169,14 @@ contém o valor literal, utilizado como segundo operando. Exemplos:
 \subsection{Indireto a registrador (base)}
 
 No modo de endereçamento indireto a registrador, dois registradores são
-utilizados no formato de instrução. O primeiro registrador é utilizado
+referenciados no formato de instrução. O primeiro registrador é utilizado
 como a origem, destino ou como operando e o segundo registrador é
 utilizado como o endereço base referenciado. O operando zero pode ser
 utilizado de forma implícita em desvios condicionais. Caso \textit{r0}
-for utilizado como o primeiro registrador, em operações de carga o
+for referenciado como o primeiro registrador, em operações de carga o
 valor será descartado, em operações de armazenamento o valor zero será
-utilizado como origem e em operações de desvio este será realizado ou
-não de forma incondicional (comparação com zero).
+utilizado como origem e em operações de desvio este poderá realizado ou
+não (comparação com zero).
 
 O tamanho total da instrução é de 2 bytes (1 palavra). A palavra contém
 a informação referente à instrução, a origem (ou destino / operando) e o
@@ -1191,26 +1197,26 @@ endereço base. Exemplos:
 \subsection{Indireto a registrador com deslocamento (base + deslocamento)}
 
 No modo de endereçamento indireto a registrador com deslocamento, dois
-registradores são utilizados no formato de instrução, além de um valor
-literal. O primeiro registrador é utilizado como origem ou destino
-e o segundo registrador e o valor literal são utilizados como operandos
+registradores são referenciados no formato de instrução, além de um valor
+imediato. O primeiro registrador é utilizado como origem ou destino
+e o segundo registrador e o valor imediato são utilizados como operandos
 para uma operação de soma, efetivamente calculando o endereço base + 
 deslocamento. Caso o registrador base for \textit{r0}, o endereço é
-calculado de forma absoluta. Caso o valor literal for zero, o resultado
+calculado de forma absoluta. Caso o valor imediato for zero, o resultado
 é o mesmo da operação utilizando o modo de endereçamento anterior
 (indireto a registrador). 
 
 O tamanho total da instrução é de 4 bytes (2 palavras). A primeira
 palavra contém a informação referente à instrução, a origem (ou destino
-/ operando) e o endereço base. A segunda palavra contém o valor literal,
-utilizado como deslocamente a partir da base. Exemplos:
+/ operando) e o endereço base. A segunda palavra contém o valor imediato,
+utilizado como deslocamento a partir da base. Exemplos:
 
 \begin{table}[htb!]
 \centering
 \begin{tabular}{|p{5.0cm}|p{8.0cm}|}
 \hline
 \bf{Operação} & \bf{Significado} \\ \hline \hline
-\texttt{stw r1,r2,12} & \verb|mem[r2 + 12] = r1| \\ \hline
+\texttt{stw r1,r2,12} & \verb|MEM[r2 + 12] = r1| \\ \hline
 \texttt{ldb r1,r0,1000} & \verb|r1 = MEM[1000]| \\ \hline
 \texttt{ldw r1,r2,-16} & \verb|r1 = MEM[r2 - 16]| \\ \hline
 \end{tabular}
@@ -1219,7 +1225,7 @@ utilizado como deslocamente a partir da base. Exemplos:
 
 \chapter{Linguagem de montagem}
 
-A linguagem de montagem da arquitetura TRM define uma série de elementos
+A linguagem de montagem da arquitetura TRM possui uma série de elementos
 em sua sintaxe. Tais elementos são usados para a implementação de
 programas. A sintaxe da linguagem será apresentada brevemente, assim como
 alguns exemplos, os quais ilustram os principais usos da linguagem.
@@ -1255,27 +1261,29 @@ objetos, de tal maneira que, caso a memória seja acessada nessa posição
 \subsection{Referências (símbolos)}
 
 Referências são nomes simbólicos, ou seja, uma abstração de endereços
-de memória, que são utilizados pelo programa em linguagem de montagem
+de memória, que são utilizados pelos programas em linguagem de montagem
 para que a ferramenta de montagem (montador) os resolva. Durante o
-processo de montagem do programa, as referências são substituídas pelo
+processo de montagem de um programa, as referências são substituídas por
 seu valor numérico. Dessa forma, uma referência é um nome que se dá a
 uma posição (ou endereço) de memória.
 
 Referências são utilizadas para declaração de pontos específicos no código,
 tais como destino de saltos, ponto de entrada em funções / subprogramas
 e também como declarações de estruturas de dados, como variáveis e
-vetores. A ferramenta para montagem é responsável por resolver as 
-referências, permitindo que estas assumam no código objeto um valor
-numérico para sua codificação nas instruções montadas.
+vetores. O montador é responsável por resolver as referências,
+permitindo que estas assumam no código objeto um valor numérico para
+sua codificação nas instruções montadas.
 
 O valor numérico de uma referência será gerado em função do espaço alocado
 previamente a declaração da mesma. Esse espaço pode ser ocupado por
 declarações de instruções ou estruturas de dados. A referência, em si,
 não ocupa memória alguma\footnote{Uma exceção é a declaração de uma
 variável contendo um símbolo (referência) para um ponto do programa.},
-sendo apenas um símbolo no programa, ou seja, uma referência ao endereço
-da próxima palavra na listagem do código objeto gerado pelo montador.
-A seguir, é apresentado um exemplo do uso de referências em um programa:
+sendo apenas um símbolo no programa, ou seja, o valor do endereço
+da próxima palavra na listagem do código objeto gerado pelo montador (no
+caso de uma declaração) ou o valor do endereço de uma posição de memória
+citada em uma instrução ou estrutura de dados. A seguir, é apresentado
+um exemplo do uso de referências em um programa:
 
 \begin{verbatim}
 ref1
@@ -1296,7 +1304,7 @@ dois pontos, por exemplo).
 
 \subsection{Instruções}
 
-Instruções são comandos que correspondem diretamente a operações que
+Instruções são comandos que correspondem diretamente a operações que a
 CPU deve executar no contexto de um programa. Cada linha de um programa
 em linguagem de montagem que realiza uma ação concreta é uma instrução.
 Instruções são representações legíveis do que se tornará o código de
@@ -1332,9 +1340,9 @@ ref3
     ...
 \end{verbatim}
 
-Valores numéricos utilizados para definição de operandos literais podem
+Valores numéricos utilizados para definição de operandos imediatos podem
 ser especificados em base 10 (por exemplo: 123), base 8 (0123) ou base
-16 (0x123). O valor literal também pode ser um símbolo, sendo seu valor
+16 (0x123). O valor imediato também pode ser um símbolo, sendo seu valor
 numérico resolvido pelo montador.
 
 \subsection{Variáveis}
@@ -1354,11 +1362,11 @@ Como pode ser observado, valores numéricos para variáveis do tipo byte
 são precedidos pelo caractere '\$'. A alocação de bytes como variáveis
 é feita de forma alinhada\footnote{O alinhamento de endereços consiste
 em alocar o objeto em um endereço que coincide com o início de uma
-palavra, usando-se um byte de \textit{padding}.}. Inteiros são acessados
-por meio das instruções \textit{ldw} e \textit{stw} (para leitura e
-escrita, respectivamente) e bytes por instruções \textit{ldb},
-\textit{lbu} e \textit{stb} (as duas primeiras usadas para leitura e a
-última para escrita).
+palavra, usando-se um byte de \textit{padding}, caso necessário.}.
+Inteiros são acessados por meio das instruções \textit{ldw} e \textit{stw}
+(para leitura e escrita na memória, respectivamente) e bytes por
+instruções \textit{ldb}, \textit{lbu} e \textit{stb} (as duas primeiras
+usadas para leitura e a última para escrita na memória).
 
 \begin{verbatim}
 ref1
@@ -1401,13 +1409,14 @@ arranjos possíveis (unidimensionais), sendo esses:
 \item String
 \end{enumerate}
 
-Arranjos dos tipos 1 e 2 possuem seus itens separados por espaço. Em
-um arranjo de bytes (tipo 2), os itens são precedidos por um caracter
-'\$'. Nos arranjos do tipo 1 e 2, é alocado um espaço contíguo de
-palavras ou bytes na memória, ou seja, cada item do arranjo possui 16
-bits (2 bytes) para o tipo inteiro ou 8 bits (1 byte) para o tipo byte.
+Arranjos dos tipos 1 e 2 devem ter seus itens separados por espaço em
+uma declaração. Em um arranjo de bytes (tipo 2), os itens são precedidos
+por um caracter '\$'. Nos arranjos do tipo 1 e 2, é alocado um espaço 
+contíguo de palavras ou bytes na memória, ou seja, cada item do arranjo
+possui 16 bits (2 bytes) para o tipo inteiro ou 8 bits (1 byte) para o
+tipo byte.
 
-Nos arranjos do tipo 3 (reserva de espaço), é define-se um tamanho em
+Nos arranjos do tipo 3 (reserva de espaço), é definido um tamanho em
 bytes de espaço contíguo a ser reservado em memória. No tipo 4, uma
 \textit{string} tem seus bytes alocados contiguamente em memória. A
 alocação de memória nos tipos 2, 3 e 4 é feita por meio de bytes alocados
@@ -1491,7 +1500,7 @@ após a montagem, podendo ser comparado ao código fonte.
 
 É importante observar que para algumas instruções são geradas duas
 palavras, já para outras outras apenas uma. Isso é o resultado do uso de 
-instruções com ou sem um campo imediado (valor literal), o que depende
+instruções com ou sem um campo imediado, o que depende
 do modo de endereçamento usado na instrução específica. As variáveis
 têm o seu espaço alocado e inicializado, não sendo apresentada uma
 informação de desmontagem, assim como é feito com os valores literais.
@@ -1506,7 +1515,7 @@ Constantes são necessárias em diversas situações em programas de
 linguagem de montagem. Por exemplo, a carga de valores numéricos para
 o processamento, referências dentro de um programa (símbolos), entre
 outros. Na arquitetura TRM, não há uma instrução especial para a carga
-de constantes, mas isso pode ser feito em conjunto com instruções
+de constantes, mas isso pode ser feito com o uso de instruções
 \textit{add} ou \textit{or} em conjunto com o registrador \textit{zr}
 (zero). Uma instrução \textit{xor} pode ser utilizada para limpar um
 registrador de forma eficiente. Alguns exemplos:
@@ -1530,7 +1539,8 @@ possível utilizar instruções \textit{add} ou \textit{or} para isso:
 \end{verbatim}
 
 A troca de valores entre dois registradores (operação \textit{swap}) é
-bastante eficiente:
+bastante eficiente, pois são utilizadas apenas instruções em formato
+regular:
 
 \begin{verbatim}
     ; v0 = 123, v1 = 456
@@ -1546,8 +1556,8 @@ Na arquitetura são definidas instruções com apenas dois registradores
 ou dois registradores e uma constante. O padrão \textit{add r1,r2,r3},
 existente em computadores como MIPS, RISC-V ou ARM pode ser emulado,
 no entanto. Por exemplo, para implementar a instrução
-\textit{sub v0,v1,v2}, onde \textit{v1} e \textit{v2} são operandos
-fonte e \textit{v0} o destino, que armazenará o resultado:
+\textit{sub v0,v1,v2} (onde \textit{v1} e \textit{v2} são operandos
+fonte e \textit{v0} o destino) utilizam-se duas instruções:
 
 \begin{verbatim}
     add v0,v1,0                 ; v0 = v1
@@ -1652,8 +1662,8 @@ lessequal
 
 \subsubsection{Laços}
 
-Operações de repetição (laços) em linguagem e montagem possuem uma
-estrutura semelhante à operações de seleção, com a diferença de que
+Operações de repetição (laços) em linguagem de montagem possuem uma
+estrutura semelhante a operações de seleção, com a diferença de que
 o fluxo de execução será redirecionado a um ponto do código percorrido
 anteriormente de maneira iterativa. Além da operação de repetição
 (como um \textit{for}, \textit{while} ou \textit{do .. while}), muitas
