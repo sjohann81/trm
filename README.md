@@ -91,7 +91,7 @@ There are two versions of the toolchain, being one in the Python programming lan
 
 ```
 $ python3 python/assemble.py example/01.add.s > 01-add.txt
-$ python3 python/simulator.py 01-add.txt
+$ python3 python/simulator.py < 01-add.txt
 ```
 
 Or use the full featured Java simulator (use the flags 'r' or 'd' for a complete run or debugging):
