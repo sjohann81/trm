@@ -5,6 +5,7 @@ public class Assembler {
 
 	private static final Map<String, Integer> codes = new HashMap<>();
 	private static final Map<Integer, String> codes_inv = new HashMap<>();
+	private static Map<String, Integer> regs;
 	private static Map<String, Integer> lookup;
 	private static Map<String, Integer> symtbl;
 
@@ -27,19 +28,20 @@ public class Assembler {
 			codes_inv.put(entry.getValue(), entry.getKey());
 		}
 		
+		regs = new HashMap<>();
 		lookup = new HashMap<>();
 		symtbl = new TreeMap<>();
 
-		lookup.put("r0", 0); lookup.put("r1", 1); lookup.put("r2", 2); lookup.put("r3", 3);
-		lookup.put("r4", 4); lookup.put("r5", 5); lookup.put("r6", 6); lookup.put("r7", 7);
-		lookup.put("r8", 8); lookup.put("r9", 9); lookup.put("r10", 10); lookup.put("r11", 11);
-		lookup.put("r12", 12); lookup.put("r13", 13); lookup.put("r14", 14); lookup.put("r15", 15);
+		regs.put("r0", 0); regs.put("r1", 1); regs.put("r2", 2); regs.put("r3", 3);
+		regs.put("r4", 4); regs.put("r5", 5); regs.put("r6", 6); regs.put("r7", 7);
+		regs.put("r8", 8); regs.put("r9", 9); regs.put("r10", 10); regs.put("r11", 11);
+		regs.put("r12", 12); regs.put("r13", 13); regs.put("r14", 14); regs.put("r15", 15);
 
-		lookup.put("zr", 0); lookup.put("a0", 1); lookup.put("a1", 2); lookup.put("a2", 3);
-		lookup.put("a3", 4); lookup.put("v0", 5); lookup.put("v1", 6); lookup.put("v2", 7);
-		lookup.put("v3", 8); lookup.put("v4", 9); lookup.put("v5", 10); lookup.put("v6", 11);
-		lookup.put("v7", 12); lookup.put("v8", 13); lookup.put("fp", 13); lookup.put("sp", 14);
-		lookup.put("lr", 15);
+		regs.put("zr", 0); regs.put("a0", 1); regs.put("a1", 2); regs.put("a2", 3);
+		regs.put("a3", 4); regs.put("v0", 5); regs.put("v1", 6); regs.put("v2", 7);
+		regs.put("v3", 8); regs.put("v4", 9); regs.put("v5", 10); regs.put("v6", 11);
+		regs.put("v7", 12); regs.put("v8", 13); regs.put("fp", 13); regs.put("sp", 14);
+		regs.put("lr", 15);
 	}
 	
 	public String getcode(int key) {
@@ -58,6 +60,14 @@ public class Assembler {
 
 	private static String tohex(int n) {
 		return String.format("%04x", n & 0xffff);
+	}
+
+	private static int getreg(String s) {
+		if (s == null || s.isEmpty()) return 0;
+		if (regs.containsKey(s)) {
+			return regs.get(s);
+		}
+		throw new IllegalArgumentException("invalid register: " + s);
 	}
 
 	private static int getval(String s) {
@@ -163,9 +173,9 @@ public class Assembler {
 		String[] parts = parts_comment[0].split(",");
 		
 		if (parts.length == 2) {
-			return op_val | (getval(parts[0]) << 4) | (getval(parts[1]) & 0xf);
+			return op_val | (getreg(parts[0]) << 4) | (getreg(parts[1]) & 0xf);
 		} else if (parts.length == 3) {
-			long instruction_word = op_val | 0x0100 | (getval(parts[0]) << 4) | (getval(parts[1]) & 0xf);
+			long instruction_word = op_val | 0x0100 | (getreg(parts[0]) << 4) | (getreg(parts[1]) & 0xf);
 			return (instruction_word << 16) | (getval(parts[2]) & 0xffff);
 		}
 		
