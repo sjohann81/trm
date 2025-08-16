@@ -43,7 +43,7 @@ public class Simulator {
 			out.putString(String.format("[program (code + data): %d bytes]\n", lines * 2));
 			
 			if (lines == 0) {
-				out.putString(String.format("[no object code - simulator failed]\n"));
+				out.putString(String.format("[no object code - simulation failed]\n"));
 				
 				return -1;
 			}
@@ -56,7 +56,7 @@ public class Simulator {
 			
 			return 0;
 		} catch (Exception e) {
-			out.putString(String.format("[error loading object code - simulator failed]\n"));
+			out.putString(String.format("[error loading object code - simulation failed]\n"));
 			
 			return -1;
 		}

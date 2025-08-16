@@ -267,7 +267,7 @@ public class Assembler {
 					}
 				}
 			} catch (Exception e) {
-				output.add(String.format("**** ????    assembler failed on line %d (%s)", line_num, e.getMessage()));
+				output.add(String.format("**** ????    syntax error, line %d (%s)", line_num, e.getMessage()));
 				output.add(String.format("**** ????    --> \"%s\"", line.replace("\n", "")));
 				return -1;
 			}
