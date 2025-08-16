@@ -754,7 +754,6 @@ class Gui extends JFrame implements ActionListener {
 			if (ok == 0) {
 				fillMem();
 				updateCode();
-				model.removeAllElements();
 				
 				return true;
 			}
