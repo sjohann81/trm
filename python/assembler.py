@@ -196,7 +196,7 @@ def pass3(program) :
 							
 						for f in flds :
 							if (len(flds) % 2) == 0 : 
-								data = (int(flds[0][1:], 0) << 8) | int(flds[1][1:], 0)
+								data = ((int(flds[0][1:], 0) & 0xff) << 8) | (int(flds[1][1:], 0) & 0xff)
 								print ("%04x %s" % (pc, tohex(data)))
 								pc = pc + 2
 								flds = flds[1:]

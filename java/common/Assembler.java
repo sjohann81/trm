@@ -263,7 +263,7 @@ public class Assembler {
 							for (int f = 0; f < fields_ar.size(); f += 2) {
 								String data_field1 = fields_ar.get(f).replace("$", "");
 								String data_field2 = fields_ar.get(f + 1).replace("$", "");
-								long data = (Integer.decode(data_field1) << 8) | Integer.decode(data_field2);
+								long data = ((Integer.decode(data_field1) & 0xff) << 8) | (Integer.decode(data_field2) & 0xff);
 								output.add(String.format("%s %s", tohex(pc), tohex((int)data)));
 								pc += 2;
 							}
