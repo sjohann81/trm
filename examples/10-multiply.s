@@ -16,8 +16,8 @@ mul
 	xor a2,a2
 repmul01
 	beq a1,zr,endmul01
-	and r4,a1,1
-	beq r4,zr,skipmul01
+	and a3,a1,1
+	beq a3,zr,skipmul01
 	add a2,a0
 skipmul01
 	lsl a0,a0,1
